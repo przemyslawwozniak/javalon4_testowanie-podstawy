@@ -2,13 +2,19 @@ package pl.sda.clockex;
 
 public class Clock {
 
-    private int hour, minutes; //0
+    private int hour, minutes, seconds; //0
 
     public Clock() {}
 
     public Clock(int hour, int minutes) {
         this.hour = hour;
         this.minutes = minutes;
+    }
+
+    public Clock(int hour, int minutes, int seconds) {
+        this.hour = hour;
+        this.minutes = minutes;
+        this.seconds = seconds;
     }
 
     public int getHour() {
@@ -68,7 +74,37 @@ public class Clock {
     }
 
     public void addClock(Clock another) {
-        if(another != null)
-            this.addMinutes(another.getHour() * 60 + another.getMinutes());
+        if(another != null) {
+            int secondsFromHours = 3600 * another.getHour();
+            int secondsFromMinutes = 60 * another.getMinutes();
+            this.addSeconds(secondsFromHours + secondsFromMinutes + another.getSeconds());
+        }
+            //this.addSeconds(60 * (another.getHour() * 60 + another.getMinutes()) + another.getSeconds());
+    }
+
+    public int getSeconds() {
+        return seconds;
+    }
+
+    public void setSeconds(int seconds) {
+        this.seconds = seconds;
+
+        if(seconds > 59)
+            this.seconds = 59;
+        if(seconds < 0)
+            this.seconds = 0;
+    }
+
+    public void addSeconds(int seconds) {
+        int summedSeconds = this.seconds + seconds;
+        if(summedSeconds > 59) {
+            int minutesFromSeconds = summedSeconds/60;    //61/60 = 1; 30/60 = 0
+            addMinutes(minutesFromSeconds);
+
+            this.seconds = summedSeconds - minutesFromSeconds * 60;
+        }
+        else {
+            this.seconds += seconds;
+        }
     }
 }

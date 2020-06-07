@@ -11,14 +11,15 @@ public class ClockTest {
 
     //--- create
     @Test
-    public void create_and_initialize_to_00_00() {
+    public void create_and_initialize_to_00_00_00() {
         //given
 
         //when
 
         //then
-        assertEquals(0, c.getMinutes());
         assertEquals(0, c.getHour());
+        assertEquals(0, c.getMinutes());
+        assertEquals(0, c.getSeconds());
     }
 
     @Test
@@ -30,6 +31,7 @@ public class ClockTest {
         //then
         assertEquals(30, c.getMinutes());
         assertEquals(10, c.getHour());
+        assertEquals(0, c.getSeconds());
     }
     //--- create
 
@@ -227,4 +229,184 @@ public class ClockTest {
     }
     //--- addClock
 
+    //---refactoring - sekundy
+    //create
+    @Test
+    public void create_and_set_initial_time_with_seconds() {
+        //given
+        c = new Clock(0, 0, 30);
+        //when
+
+        //then
+        assertEquals(0, c.getHour());
+        assertEquals(0, c.getMinutes());
+        assertEquals(30, c.getSeconds());
+    }
+    //setSeconds
+    @Test
+    public void set_seconds_to_min_value() {
+        //given
+        c = new Clock(0, 0, 30);
+        //when
+        c.setSeconds(0);
+        //then
+        assertEquals(0, c.getSeconds());
+    }
+
+    @Test
+    public void set_seconds_below_min_value() {
+        //given
+
+        //when
+        c.setSeconds(-1);
+        //then
+        assertEquals(0, c.getSeconds());
+    }
+
+    @Test
+    public void set_seconds_to_max_value() {
+        //given
+
+        //when
+        c.setSeconds(59);
+        //then
+        assertEquals(59, c.getSeconds());
+    }
+
+    @Test
+    public void set_seconds_above_max_value() {
+        //given
+
+        //when
+        c.setSeconds(60);
+        //then
+        assertEquals(59, c.getSeconds());
+    }
+
+    //addSeconds
+    @Test
+    public void add_seconds_1_30_30_plus_10_gives_1_30_40() {
+        //given
+        c = new Clock(1, 30, 30);
+        //when
+        c.addSeconds(10);
+        //then
+        assertEquals(1, c.getHour());
+        assertEquals(30, c.getMinutes());
+        assertEquals(40, c.getSeconds());
+    }
+
+    @Test
+    public void add_seconds_1_59_00_plus_100_gives_02_00_40() {
+        //given
+        c = new Clock(1, 59, 0);
+        //when
+        c.addSeconds(100);
+        //then
+        assertEquals(2, c.getHour());
+        assertEquals(0, c.getMinutes());
+        assertEquals(40, c.getSeconds());
+    }
+
+    @Test
+    public void add_seconds_1_30_30_plus_31_gives_1_31_01() {
+        //given
+        c = new Clock(1, 30, 30);
+        //when
+        c.addSeconds(31);
+        //then
+        assertEquals(1, c.getHour());
+        assertEquals(31, c.getMinutes());
+        assertEquals(1, c.getSeconds());
+    }
+
+    @Test
+    public void add_seconds_1_59_59_plus_10_gives_02_00_09() {
+        //given
+        c = new Clock(1, 59, 59);
+        //when
+        c.addSeconds(10);
+        //then
+        assertEquals(2, c.getHour());
+        assertEquals(0, c.getMinutes());
+        assertEquals(9, c.getSeconds());
+    }
+
+    @Test
+    public void add_seconds_23_59_59_plus_1_gives_00_00_00() {
+        //given
+        c = new Clock(23, 59, 59);
+        //when
+        c.addSeconds(1);
+        //then
+        assertEquals(0, c.getHour());
+        assertEquals(0, c.getMinutes());
+        assertEquals(0, c.getSeconds());
+    }
+
+    //addClock
+    @Test
+    public void add_clock_1_30_30_plus_00_00_10_gives_1_30_40() {
+        //given
+        c = new Clock(1, 30, 30);
+        Clock c2 = new Clock(0, 0, 10);
+        //when
+        c.addClock(c2);
+        //then
+        assertEquals(1, c.getHour());
+        assertEquals(30, c.getMinutes());
+        assertEquals(40, c.getSeconds());
+    }
+
+    @Test
+    public void add_seconds_1_59_00_plus_00_01_40_gives_02_00_40() {
+        //given
+        c = new Clock(1, 59, 0);
+        Clock c2 = new Clock(0, 1, 40);
+        //when
+        c.addClock(c2);
+        //then
+        assertEquals(2, c.getHour());
+        assertEquals(0, c.getMinutes());
+        assertEquals(40, c.getSeconds());
+    }
+
+    @Test
+    public void add_seconds_1_30_30_plus_00_00_31_gives_1_31_01() {
+        //given
+        c = new Clock(1, 30, 30);
+        Clock c2 = new Clock(0, 0, 31);
+        //when
+        c.addClock(c2);
+        //then
+        assertEquals(1, c.getHour());
+        assertEquals(31, c.getMinutes());
+        assertEquals(1, c.getSeconds());
+    }
+
+    @Test
+    public void add_seconds_1_59_59_plus_00_00_10_gives_02_00_09() {
+        //given
+        c = new Clock(1, 59, 59);
+        Clock c2 = new Clock(0, 0, 10);
+        //when
+        c.addClock(c2);
+        //then
+        assertEquals(2, c.getHour());
+        assertEquals(0, c.getMinutes());
+        assertEquals(9, c.getSeconds());
+    }
+
+    @Test
+    public void add_seconds_23_59_59_plus_00_00_01_gives_00_00_00() {
+        //given
+        c = new Clock(23, 59, 59);
+        Clock c2 = new Clock(0, 0, 1);
+        //when
+        c.addClock(c2);
+        //then
+        assertEquals(0, c.getHour());
+        assertEquals(0, c.getMinutes());
+        assertEquals(0, c.getSeconds());
+    }
 }
