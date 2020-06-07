@@ -4,9 +4,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class ProductRatingTest {
+public class ProductRatingWithExceptionsTest {
 
-    ProductRating pr = new ProductRating();
+    ProductRatingWithExceptions pr = new ProductRatingWithExceptions();
 
     @Test
     public void create() {
@@ -40,20 +40,20 @@ public class ProductRatingTest {
                 5, pr.getScore());
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void user_sets_score_under_lower_range() {
         //given
 
 
         //when
-        pr.setScore(0);
+        pr.setScore(0); //juz tu leci wyjatek i test nie powinien byc kontynuowany
 
         //then
-        assertEquals("Product Rating, when set below range, is reset to min possible value (1)",
-                1, pr.getScore());
+        /*assertEquals("Product Rating, when set below range, is reset to min possible value (1)",
+                1, pr.getScore());*/
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void user_sets_negative_score() {
         //given
 
@@ -62,11 +62,11 @@ public class ProductRatingTest {
         pr.setScore(-1);
 
         //then
-        assertEquals("Product Rating, when set to negative value, is reset to min possible value (1)",
-                1, pr.getScore());
+        /*assertEquals("Product Rating, when set to negative value, is reset to min possible value (1)",
+                1, pr.getScore());*/
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void user_sets_score_above_upper_range() {
         //given
 
@@ -75,8 +75,8 @@ public class ProductRatingTest {
         pr.setScore(6);
 
         //then
-        assertEquals("Product Rating, when set to above range, is reset to max possible value (5)",
-                5, pr.getScore());
+        /*assertEquals("Product Rating, when set to above range, is reset to max possible value (5)",
+                5, pr.getScore());*/
     }
 
 }

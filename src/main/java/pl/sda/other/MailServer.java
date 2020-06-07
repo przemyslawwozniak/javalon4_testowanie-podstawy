@@ -7,9 +7,9 @@ package pl.sda.other;
  */
 public class MailServer {
 
-    private int port, buffer;
+    int port, buffer;
     private String host, protocol;
-    private boolean isInitialized;
+    boolean isInitialized;
 
     public MailServer(int port, int buffer, String host, String protocol) {
         this.port = port;
@@ -34,7 +34,7 @@ public class MailServer {
         this.isInitialized = true;
     };
     private void checkInit() {
-        if(!isInitialized)
+        if(!isInitialized || buffer < 100)
             throw new IllegalStateException();
     }
 
