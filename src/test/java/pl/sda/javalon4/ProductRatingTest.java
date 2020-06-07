@@ -6,14 +6,25 @@ import static org.junit.Assert.assertEquals;
 
 public class ProductRatingTest {
 
+    ProductRating pr = new ProductRating();
+
     @Test
     public void create() {
-        ProductRating pr = new ProductRating();
+        //ProductRating pr = new ProductRating();
+        assertEquals("Initial Product Rating should be equal to 3.", 3, pr.getScore());
     }
 
     @Test
     public void user_sets_score_in_lower_range() {
+        //given - warunki poczatkowe testu
+        //ProductRating pr = new ProductRating();
 
+        //when - akcja ktora dzieje sie w tescie - testowana funkcjonalnosc
+        pr.setScore(1);
+
+        //then - rezultat, ktorego sie spodziewamy
+        assertEquals("Product Rating, when set within range, is correctly assigned to 'score' field.",
+                1, pr.getScore());
     }
 
     @Test

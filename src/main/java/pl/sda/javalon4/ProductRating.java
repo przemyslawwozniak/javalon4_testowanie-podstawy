@@ -2,7 +2,7 @@ package pl.sda.javalon4;
 
 public class ProductRating {
 
-    private int score;
+    private int score = 3;
 
     //Alt+Insert -> Getter&Setter
     public int getScore() {
